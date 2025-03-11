@@ -9,68 +9,76 @@ import {
   Button,
   Linking,
 } from "react-native";
-import { FontAwesome6 } from "@expo/vector-icons";
+import { TarjetaExperiencia } from "@/components/TarjetaExperiencia";
+import { experiencias } from "@/data/experiencias";
+import { Iconos } from "@/components/Iconos";
 
 export default function Index() {
+  const onGithubPressHandler = () => {
+    Linking.openURL("https://github.com/Adrianfer4");
+  };
+  const onTwitterPressHandler = () => {
+    Linking.openURL("https://x.com/yerssondereck");
+  };
+  const onAtPressHandler = () => {
+    Linking.openURL("https://www.linkedin.com/in/nestor-fernandezb/");
+  };
+  const onInstagramPressHandler = () => {
+    Linking.openURL("https://www.instagram.com/fernandez_pipe/");
+  };
+  const onFacebookPressHandler = () => {
+    Linking.openURL("https://www.facebook.com/pipe.fernandez.1806");
+  };
+
   const onContactoHandler = () => {
-    console.log("mailto:yerssondereck@gmail.com");
     Linking.openURL("mailto:yerssondereck@gmail.com");
   };
+  const renderExperiencias = () =>
+    experiencias.map((experiencia, index) => {
+      return (
+        <TarjetaExperiencia
+          key={`${index}-${experiencia.empresa}-${experiencia.posicion}`}
+          logo={experiencia.logo}
+          posicion={experiencia.posicion}
+          empresa={experiencia.empresa}
+          fecha={experiencia.fecha}
+          locacion={experiencia.locacion}
+          tecnologias={experiencia.tecnologias}
+        />
+      );
+    });
   return (
     <SafeAreaView style={styles.contenido}>
       <ScrollView>
         <View style={styles.contentContainer}>
           <Image
-            source={{
-              uri: "https://itspectrumsolutions.com/wp-content/uploads/2024/03/reactnative.jpg",
-            }}
+            source={require("@/assets/images/portada.png")}
             style={styles.banner}
           />
           <Image
-            source={require("@/assets/images/yo.jpg")}
+            source={require("@/assets/images/yo1.png")}
             style={styles.imagenPersonal}
           />
           <Text style={styles.title}>Nestor Fernandez</Text>
-          <View style={styles.contenedorIconos}>
-            <FontAwesome6 name="github" size={24} color="darkblue" />
-            <FontAwesome6 name="x-twitter" size={24} color="darkblue" />
-            <FontAwesome6 name="at" size={24} color="darkblue" />
-            <FontAwesome6 name="instagram" size={24} color="darkblue" />
-            <FontAwesome6 name="facebook" size={24} color="darkblue" />
-          </View>
+
+          <Iconos
+            onGithubPress={onGithubPressHandler}
+            onTwitterPress={onTwitterPressHandler}
+            onAtPress={onAtPressHandler}
+            onInstagramPress={onInstagramPressHandler}
+            onFacebookPress={onFacebookPressHandler}
+          />
+
           <Button title="Contacto" onPress={onContactoHandler} />
-          <Text style={styles.bio}>Desarrollador en formación con pasión por la tecnología. Especializándome en React Native con ComIt y enfocado en crear soluciones innovadoras.</Text>
+          <Text style={styles.bio}>
+            Desarrollador en formación con pasión por la tecnología.
+            Especializándome en React Native con ComIt y enfocado en crear
+            soluciones innovadoras.
+          </Text>
           <Text style={styles.experiencia}>Experiencia</Text>
         </View>
-        <View style={{flex: 1, flexDirection: "row", alignItems: "flex-start", gap: 10, borderBottomColor: "#ddd", borderBottomWidth: 1, padding: 10,}}>
-            <Image 
-            style={{width: 80, height: 80}}
-            source={{uri: "https://media.licdn.com/dms/image/v2/C560BAQFoMbh8Jawjhg/company-logo_100_100/company-logo_100_100/0/1631338342207?e=1749081600&v=beta&t=6fgq4Zi_lslt6EwSEinoOUmyLfOT2qaNu9C_ny94y9c",}}
-          />
 
-          <View style={{flex: 1, flexDirection: "column"}}>
-            <Text style={styles.posicion}>Posición</Text>
-            <Text style={styles.empresa}>Empresa</Text>
-            <Text style={styles.fecha}>Fecha</Text>
-            <Text style={styles.locacion}>Locación</Text>
-            <Text style={styles.tecnologias}>Tecnologias</Text>
-          </View>
-        </View>
-
-        <View style={{flex: 1, flexDirection: "row", alignItems: "flex-start", gap: 10, borderBottomColor: "#ddd", borderBottomWidth: 1, padding: 10,}}>
-            <Image 
-            style={{width: 80, height: 80}}
-            source={require("@/assets/images/experiencia1.jpeg")}
-          />
-
-          <View style={{flex: 1, flexDirection: "column"}}>
-            <Text style={styles.posicion}>Posición</Text>
-            <Text style={styles.empresa}>Empresa</Text>
-            <Text style={styles.fecha}>Fecha</Text>
-            <Text style={styles.locacion}>Locación</Text>
-            <Text style={styles.tecnologias}>Tecnologias</Text>
-          </View>
-        </View>
+        {renderExperiencias()}
       </ScrollView>
     </SafeAreaView>
   );
@@ -78,6 +86,7 @@ export default function Index() {
 const styles = StyleSheet.create({
   contenido: {
     flex: 1,
+    backgroundColor: "white",
   },
   contentContainer: {
     flex: 1,
@@ -87,61 +96,32 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 30,
-    fontWeight: "bold",
-    color: "darkblue",
+    fontWeight: 900,
+    color: "black",
   },
   banner: {
     width: "100%",
-    aspectRatio: 16 / 9,
+    aspectRatio: 15 / 7,
   },
   imagenPersonal: {
-    width: 200,
-    height: 200,
-    borderRadius: 100,
+    width: 150,
+    height: 150,
+    borderRadius: 75,
     borderWidth: 5,
     borderColor: "white",
-    marginTop: -100,
-  },
-  contenedorIconos: {
-    flexDirection: "row",
-    marginVertical: 10,
-    gap: 10,
+    marginTop: -75,
   },
   bio: {
     fontSize: 12,
     lineHeight: 18,
     paddingTop: 10,
-    textAlign: "justify"
+    textAlign: "justify",
   },
   experiencia: {
-    fontWeight: "bold",
-    fontSize: 18,
+    fontWeight: 900,
+    fontSize: 20,
     marginTop: 20,
-    color: "darkblue",
-    marginBlock: 10
+    color: "black",
+    marginBlock: 10,
   },
-  posicion: {
-    fontWeight: "bold",
-    fontSize: 14
-  },
-  empresa: {
-    fontSize: 12,
-    lineHeight: 18
-  },
-  fecha: {
-    fontSize: 12,
-    color: "#808080",
-    lineHeight: 18
-  },
-  locacion: {
-    fontSize: 12,
-    color: "#808080",
-    lineHeight: 18,
-    marginBottom: 10
-  },
-  tecnologias: {
-    fontSize: 12,
-    fontWeight: "bold",
-    lineHeight: 18
-  }
 });
